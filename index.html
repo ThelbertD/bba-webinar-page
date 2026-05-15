@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Better Body Academy · The Hormone Fix Webinar</title>
+<meta name="theme-color" content="#F58FA8" />
+<link rel="icon" type="image/png" href="img/bba-badge.png" />
+<link rel="apple-touch-icon" href="img/bba-badge.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #000000;
+    --surface: #0E0E0E;
+    --surface-2: #161616;
+    --text: #ffffff;
+    --text-2: rgba(255,255,255,0.7);
+    --muted: rgba(255,255,255,0.45);
+    --pink: #F58FA8;
+    --pink-glow: #FFB6CE;
+    --pink-soft: rgba(245,143,168,0.14);
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.2);
+    --ok: #22C55E;
+    --warn: #F59E0B;
+    --display: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --serif: "Instrument Serif", Georgia, serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  *,*::before,*::after { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--text);
+    font-family: var(--display); font-weight: 400;
+    overflow: hidden; height: 100%;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--pink); color: #000; }
+
+  .skip-link {
+    position: fixed; top: 8px; left: 8px; z-index: 200;
+    background: var(--pink); color: #000;
+    padding: 10px 16px; border-radius: 10px;
+    font-family: var(--mono); font-weight: 600; font-size: 14px;
+    text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase;
+    transform: translateY(-200%); transition: transform 0.2s ease;
+  }
+  .skip-link:focus-visible { transform: translateY(0); outline: none; box-shadow: 0 0 0 3px rgba(245,143,168,0.45); }
+
+  :focus-visible { outline: none; }
+  .ctrl-btn:focus-visible, .cta-btn:focus-visible {
+    box-shadow: 0 0 0 3px var(--pink), 0 0 0 6px rgba(245,143,168,0.28);
+  }
+
+  /* Deck + slides */
+  .deck { position: fixed; inset: 0; overflow: hidden; }
+  .slide {
+    position: absolute; inset: 0;
+    padding: clamp(40px, 5vw, 80px) clamp(28px, 7vw, 120px);
+    display: none; flex-direction: column; justify-content: center;
+    background: var(--bg); overflow-y: auto;
+    animation: fadeIn 0.4s cubic-bezier(.2,.7,.2,1);
+  }
+  .slide.active { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Brand bar */
+  .brandbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 28px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.85), rgba(0,0,0,0));
+    pointer-events: none;
+  }
+  .logo { display: inline-flex; align-items: center; color: var(--text); }
+  .logo img {
+    height: 34px; width: auto; display: block;
+    filter: drop-shadow(0 4px 18px rgba(245,143,168,0.22));
+  }
+  .session-tag {
+    font-family: var(--mono); font-size: 13px; color: var(--muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+
+  /* Controls */
+  .controls {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
+    padding: 18px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(0deg, rgba(0,0,0,0.92), rgba(0,0,0,0));
+  }
+  .progress-wrap {
+    flex: 1; margin: 0 24px; height: 3px;
+    background: rgba(255,255,255,0.06); border-radius: 99px; overflow: hidden;
+  }
+  .progress {
+    height: 100%; background: linear-gradient(90deg, var(--pink), var(--pink-glow));
+    width: 0%; transition: width 0.4s ease;
+  }
+  .ctrl-btn {
+    appearance: none; border: 1px solid var(--border-strong);
+    background: var(--surface); color: var(--text);
+    width: 44px; height: 44px; border-radius: 12px;
+    display: grid; place-items: center; cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .ctrl-btn:hover { background: var(--surface-2); border-color: var(--pink); color: var(--pink); }
+  .ctrl-btn:active { transform: scale(0.96); }
+  .ctrl-btn svg { width: 18px; height: 18px; }
+  .counter {
+    font-family: var(--mono); font-size: 14px; color: var(--text-2);
+    min-width: 70px; text-align: center; letter-spacing: 0.1em;
+  }
+  .counter b { color: var(--text); }
+
+  /* Typography */
+  h1, h2, h3, h4 { font-family: var(--display); margin: 0; }
+  h1 { font-size: clamp(2.4rem, 6vw, 5rem); font-weight: 800; line-height: 1.04; letter-spacing: -0.025em; }
+  h2 { font-size: clamp(1.9rem, 4vw, 3.4rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.018em; }
+  h3 { font-size: clamp(1.3rem, 2.4vw, 2rem); font-weight: 700; line-height: 1.18; letter-spacing: -0.012em; }
+  h4 { font-size: clamp(0.95rem, 1.3vw, 1.1rem); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--pink); }
+  p  { font-size: clamp(1rem, 1.3vw, 1.2rem); line-height: 1.55; color: var(--text-2); margin: 0 0 1em; }
+  .lead { font-size: clamp(1.1rem, 1.7vw, 1.4rem); color: var(--text); line-height: 1.45; font-weight: 500; }
+  em { color: var(--pink); font-style: normal; font-weight: 600; }
+  .serif { font-family: var(--serif); font-style: italic; font-weight: 400; }
+  strong, b { color: var(--text); font-weight: 600; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 13px;
+    color: var(--pink); text-transform: uppercase; letter-spacing: 0.22em;
+    margin-bottom: 26px;
+  }
+  .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--pink); }
+  .eyebrow.center { justify-content: center; display: inline-flex; }
+
+  .container { max-width: 1240px; margin: 0 auto; width: 100%; }
+  .narrow    { max-width: 920px;  margin: 0 auto; width: 100%; }
+  .wide      { max-width: 1480px; margin: 0 auto; width: 100%; }
+  .center { text-align: center; }
+  .mt-32 { margin-top: 32px; } .mt-48 { margin-top: 48px; }
+
+  /* Cover slide */
+  .cover { position: relative; text-align: left; background: var(--bg); }
+  .cover::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(60% 80% at 78% 35%, rgba(245,143,168,0.25), transparent 65%),
+      radial-gradient(45% 60% at 12% 78%, rgba(245,143,168,0.12), transparent 70%),
+      radial-gradient(80% 60% at 50% 110%, rgba(255,182,206,0.08), transparent 70%);
+    z-index: 0; pointer-events: none;
+  }
+  .cover > * { position: relative; z-index: 1; }
+  .cover-grid {
+    display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 60px; align-items: center;
+  }
+  .cover-badge {
+    position: relative;
+    aspect-ratio: 1; max-width: 360px; margin: 0 auto;
+    filter: drop-shadow(0 30px 80px rgba(245,143,168,0.45));
+  }
+  .cover-badge img { width: 100%; height: auto; display: block; }
+  .cover-badge::before {
+    content: ""; position: absolute; inset: -10%; z-index: -1; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,143,168,0.25), transparent 65%);
+  }
+  @media (max-width: 900px) {
+    .cover-grid { grid-template-columns: 1fr; gap: 32px; }
+    .cover-badge { max-width: 200px; }
+  }
+  .cover h1 { font-size: clamp(2.2rem, 5.4vw, 4.6rem); }
+  .cover h1 .accent {
+    background: linear-gradient(135deg, var(--pink), var(--pink-glow) 60%, #FFE0EC);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .cover .sub { font-size: clamp(1.05rem, 1.6vw, 1.4rem); color: var(--text-2); max-width: 760px; }
+  .cover .meta {
+    display: flex; gap: 28px; flex-wrap: wrap; margin-top: 36px;
+    font-family: var(--mono); font-size: 13px;
+    text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted);
+  }
+  .cover .meta b { color: var(--pink); }
+
+  /* Pain list */
+  .pain-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 36px;
+  }
+  .pain-card {
+    border: 1px solid var(--border); border-radius: 16px; padding: 24px 26px;
+    background: rgba(255,255,255,0.02);
+  }
+  .pain-card .q {
+    font-family: var(--serif); font-style: italic; font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+    color: var(--text); line-height: 1.4;
+  }
+  @media (max-width: 760px) { .pain-grid { grid-template-columns: 1fr; } }
+
+  /* Promise list */
+  .promise-list { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 14px; }
+  .promise-list li {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 18px 22px; border: 1px solid var(--border); border-radius: 14px;
+    background: rgba(245,143,168,0.04);
+  }
+  .promise-list .pin {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink), var(--pink-glow));
+    display: grid; place-items: center; color: #000; font-weight: 800; font-size: 13px;
+    margin-top: 2px;
+  }
+  .promise-list .text { font-size: clamp(1rem, 1.4vw, 1.2rem); color: var(--text); line-height: 1.45; }
+
+  /* Myth cards */
+  .myth-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
+  .myth-card {
+    border: 1px solid var(--border); border-radius: 16px; padding: 26px 24px;
+    background: rgba(255,255,255,0.02); display: flex; flex-direction: column; gap: 12px;
+  }
+  .myth-tag {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--pink);
+  }
+  .myth-card h3 { font-size: clamp(1.15rem, 1.8vw, 1.55rem); }
+  .myth-card p { font-size: 0.98rem; margin: 0; }
+  @media (max-width: 900px) { .myth-row { grid-template-columns: 1fr; } }
+
+  /* Photo block (team) */
+  .photo-block {
+    margin-top: 32px;
+    border-radius: 24px; overflow: hidden;
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 30px 80px -20px rgba(245,143,168,0.3);
+    max-width: 760px;
+  }
+  .photo-block img { display: block; width: 100%; height: auto; }
+  .photo-caption {
+    display: flex; gap: 12px; align-items: center; justify-content: center;
+    margin-top: 18px; font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+  }
+  .photo-caption .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pink); }
+
+  /* Who-we-are + team photo two-column */
+  .who-team-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+  }
+  .who-team-photo { display: flex; flex-direction: column; align-items: center; }
+  .who-team-photo .photo-caption { margin-top: 18px; }
+  @media (max-width: 900px) {
+    .who-team-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  /* Case study placeholder */
+  .case {
+    border: 1px solid var(--border); border-radius: 20px;
+    padding: 32px; background: rgba(255,255,255,0.02);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center;
+    margin-top: 32px;
+  }
+  .case .ph {
+    aspect-ratio: 4/5; border-radius: 16px;
+    background: linear-gradient(135deg, rgba(245,143,168,0.15), rgba(255,182,206,0.05));
+    border: 1px dashed var(--border-strong);
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted); text-align: center;
+  }
+  .case-photo {
+    aspect-ratio: 4/5; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 20px 60px -15px rgba(245,143,168,0.35);
+  }
+  .case-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .case h2 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); }
+  .case .result-pill {
+    display: inline-flex; align-items: center; gap: 10px; margin-top: 12px;
+    padding: 10px 16px; border-radius: 999px;
+    background: linear-gradient(135deg, var(--pink), var(--pink-glow));
+    color: #000; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.02em;
+  }
+  @media (max-width: 900px) { .case { grid-template-columns: 1fr; padding: 24px; } }
+
+  /* Framework pillars */
+  .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
+  .pillar-card {
+    border: 1px solid var(--border); border-radius: 18px; padding: 28px 24px;
+    background: rgba(245,143,168,0.04);
+  }
+  .pillar-card .num {
+    font-family: var(--serif); font-style: italic; font-size: 3.4rem;
+    color: var(--pink); line-height: 1; margin-bottom: 10px;
+  }
+  .pillar-card h3 { margin-bottom: 8px; }
+  .pillar-card p { font-size: 0.98rem; margin: 0; }
+  @media (max-width: 900px) { .pillar-grid { grid-template-columns: 1fr; } }
+
+  /* Check / cross lists */
+  .who-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
+  .who-card {
+    border: 1px solid var(--border); border-radius: 18px; padding: 28px;
+  }
+  .who-card.no { background: rgba(239,68,68,0.04); }
+  .who-card.yes { background: rgba(34,197,94,0.04); }
+  .who-card h3 { font-size: 1.4rem; margin-bottom: 14px; }
+  .who-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .who-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 1rem; color: var(--text-2); line-height: 1.5; }
+  .who-list .mark {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+    display: grid; place-items: center; font-weight: 800; font-size: 13px; margin-top: 1px;
+  }
+  .who-list .no-m { background: rgba(239,68,68,0.15); color: #FCA5A5; }
+  .who-list .yes-m { background: rgba(34,197,94,0.15); color: #86EFAC; }
+  @media (max-width: 900px) { .who-cols { grid-template-columns: 1fr; } }
+
+  /* Breaker slide */
+  .breaker { text-align: center; }
+  .breaker h1 { font-family: var(--display); }
+  .breaker .serif { color: var(--pink); }
+
+  /* CTA */
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 20px 44px; border-radius: 16px;
+    background: linear-gradient(135deg, var(--pink), var(--pink-glow));
+    color: #000; font-weight: 800; font-size: 1.1rem; letter-spacing: 0.02em;
+    text-decoration: none;
+    box-shadow: 0 20px 60px -15px rgba(245,143,168,0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 24px 70px -15px rgba(245,143,168,0.8); }
+  .cta-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: #000; }
+
+  /* Small mobile */
+  @media (max-width: 600px) {
+    .slide { padding: 80px 20px 100px; }
+    .cover h1 { font-size: clamp(1.9rem, 8vw, 2.6rem); }
+    .controls { padding: 14px 16px; }
+    .session-tag { display: none; }
+    .progress-wrap { display: none; }
+    .pain-grid, .myth-row, .pillar-grid, .who-cols { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .slide { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#deck">Skip to slides</a>
+
+<header class="brandbar">
+  <span class="logo" aria-label="Better Body Academy">
+    <img src="img/bba-logo-horizontal.png" alt="Better Body Academy" />
+  </span>
+  <span class="session-tag">The Hormone Fix · For Women 35+</span>
+</header>
+
+<div aria-live="polite" aria-atomic="true" id="live-region" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"></div>
+
+<main class="deck" id="deck" tabindex="-1" aria-roledescription="carousel" aria-label="BBA Hormone Fix Webinar">
+
+  <!-- 1 · COVER -->
+  <section class="slide cover active">
+    <div class="container">
+      <div class="cover-grid">
+        <div>
+          <div class="eyebrow">Better Body Academy · Live Training</div>
+          <h1>The Hormone Fix for <span class="accent">stubborn weight gain</span> after 35.</h1>
+          <p class="sub mt-32">A 60-minute live class for women who are doing everything right and still can't shift the weight. We'll show you why your body changed, what's actually going on with your hormones, and the exact next step that works for women in our community.</p>
+          <div class="meta">
+            <span>Host · <b>BBA Coaching Team</b></span>
+            <span>Duration · <b>60 min + 10 min Q&amp;A</b></span>
+            <span>For · <b>Women 35-60</b></span>
+          </div>
+        </div>
+        <div class="cover-badge">
+          <img src="img/bba-badge.png" alt="Better Body Academy Transformation Team badge" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · WELCOME -->
+  <section class="slide">
+    <div class="narrow">
+      <div class="eyebrow">Welcome</div>
+      <h2>Glad you're here.</h2>
+      <p class="lead mt-32">Take a breath. Grab a notebook. The next hour is the one we built for women who are tired of being told to "just eat less and move more" when they already know that isn't the problem.</p>
+      <p class="mt-32">If you've been searching for an honest answer, we'll give you one today. Real reasons. Real frameworks. Real next step.</p>
+    </div>
+  </section>
+
+  <!-- 3 · DOES THIS SOUND LIKE YOU -->
+  <section class="slide">
+    <div class="container">
+      <div class="eyebrow">Have you said any of these lately?</div>
+      <h2>If any of these are you, you're in the right room.</h2>
+      <div class="pain-grid">
+        <div class="pain-card"><div class="q">"I'm eating the same way I always did and the weight just keeps creeping on."</div></div>
+        <div class="pain-card"><div class="q">"I'm exhausted by 3pm but wide awake at midnight."</div></div>
+        <div class="pain-card"><div class="q">"My belly looks bloated even on days I barely ate."</div></div>
+        <div class="pain-card"><div class="q">"I used to be able to lose weight in a week. Now nothing works."</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3b · THE QUIETER ONES -->
+  <section class="slide">
+    <div class="container">
+      <div class="eyebrow">And the quieter ones</div>
+      <h2>These are the ones women don't say out loud.</h2>
+      <div class="pain-grid">
+        <div class="pain-card"><div class="q">"I look in the mirror and barely recognise the shape."</div></div>
+        <div class="pain-card"><div class="q">"My partner says I'm fine. I know I'm not."</div></div>
+        <div class="pain-card"><div class="q">"I cried over a dress that fit last winter."</div></div>
+        <div class="pain-card"><div class="q">"Some days food is the only thing I get to enjoy."</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · WHAT YOU'LL WALK AWAY WITH -->
+  <section class="slide">
+    <div class="narrow">
+      <div class="eyebrow">What you'll walk away with</div>
+      <h2>Three things, in one hour.</h2>
+      <ul class="promise-list">
+        <li><span class="pin">1</span><span class="text">The real reason fat loss stops working for most women after 35, and how to tell which hormone is driving yours.</span></li>
+        <li><span class="pin">2</span><span class="text">Why high-protein, low-carb, and "just walk more" plans backfire when your cortisol is high and your estrogen is shifting.</span></li>
+        <li><span class="pin">3</span><span class="text">The 3-pillar BBA framework our coaching team uses with women in this exact stage of life.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5 · WHY THE OLD RULES STOP WORKING -->
+  <section class="slide">
+    <div class="narrow">
+      <div class="eyebrow">A hard truth, kindly</div>
+      <h2>"Eat less, move more" was never the answer. After 35 it actively makes things worse.</h2>
+      <p class="mt-32">Your body at 25 was a different machine. Different recovery, different stress tolerance, different hormonal baseline. The plan that worked in your twenties is the same plan that's burning out your nervous system now.</p>
+    </div>
+  </section>
+
+  <!-- 5b · WHAT CHANGED -->
+  <section class="slide">
+    <div class="narrow">
+      <div class="eyebrow">What actually changed</div>
+      <h2>Your body changed. The plan didn't catch up.</h2>
+      <p class="lead mt-32">Between 35 and 50, three internal systems quietly rewrite themselves: how you produce sex hormones, how you respond to stress, and how you handle blood sugar.</p>
+      <p class="mt-32">The plan that worked at 28 was written for a body that produced more estrogen, handled cortisol better, and slept harder. None of those are the same now. That isn't a failure on your part. It's biology asking you for a different plan.</p>
+    </div>
+  </section>
+
+  <!-- 6 · THE HORMONE CASCADE -->
+  <section class="slide">
+    <div class="container">
+      <div class="eyebrow">What's actually going on</div>
+      <h2>Three hormones shift between 35 and menopause. They run the show.</h2>
+      <div class="myth-row" style="margin-top:48px;">
+        <div class="myth-card">
+          <span class="myth-tag">Hormone 01</span>
+          <h3>Estrogen</h3>
+          <p>Drops unevenly, which changes where you store fat and how your body responds to carbs.</p>
+        </div>
+        <div class="myth-card">
+          <span class="myth-tag">Hormone 02</span>
+          <h3>Cortisol</h3>
+          <p>Rises with stress, broken sleep, and under-eating. Cortisol is the single biggest blocker we see.</p>
+        </div>
+        <div class="myth-card">
+          <span class="myth-tag">Hormone 03</span>
+          <h3>Insulin</h3>
+          <p>Becomes less efficient. Even "healthy" carb intake can drive belly fat retention when this is off.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · MYTH BREAKER -->
+  <section class="slide breaker">
+    <div class="narrow center">
+      <div class="eyebrow center">Section 02</div>
+      <h1>The three myths that <span class="serif">keep women stuck.</span></h1>
+    </div>
+  </section>
+
+  <!-- 8 · MYTH 1 -->
+  <section class="slide">
+    <div class="narrow">
+      <div class="eyebrow">Myth 01</div>
+      <h2>"I just need to do more cardio."</h2>
+      <p class="mt-32">Long, hard cardio sessions spike cortisol in a system that's already over-stressed. What you read as discipline, your body reads as a threat. Threat hormones hold onto belly fat. Hard truth, easy fix.</p>
+    </div>
+  </section>
+
+  <!-- 9 · MYTH 2 -->
+  <section class="slide">
+    <div class="narrow">
+      <div class="eyebrow">Myth 02</div>
+      <h2>"I should cut out all carbs."</h2>
+      <p class="mt-32">Cutting carbs to zero crushes your thyroid output and tanks your sleep quality. Sleep is where female fat loss actually happens. We'll show you the carb pattern our coaching team uses instead.</p>
+    </div>
+  </section>
+
+  <!-- 10 · MYTH 3 -->
+  <section class="slide">
+    <div class="narrow">
+      <div class="eyebrow">Myth 03</div>
+      <h2>"If I just had more willpower."</h2>
+      <p class="mt-32">You don't have a willpower problem. You have a hormone problem dressed up as a willpower problem. The cravings, the 9pm fridge raids, the "why can't I just stick to this" loop, that's biology, not character.</p>
+    </div>
+  </section>
+
+  <!-- 11+12 · WHO WE ARE + TEAM TRANSFORMATION PHOTO -->
+  <section class="slide">
+    <div class="container">
+      <div class="who-team-grid">
+        <div class="who-team-text">
+          <div class="eyebrow">Who's running this room</div>
+          <h2 style="margin-bottom:8px;">Better Body Academy.</h2>
+          <p class="lead mt-32">We're a coaching team that has worked with hundreds of women through perimenopause, postpartum recovery, and the "I used to know my body" stage. Eight years of programming refined through real client data, not theory.</p>
+          <p class="mt-32">Today's host walks you through the framework live. The rest of the team is in the room for the Q&amp;A.</p>
+        </div>
+        <div class="who-team-photo">
+          <div class="photo-block" style="margin:0;">
+            <img src="img/team-transformation.jpeg" alt="Better Body Academy coaches and members training together" />
+          </div>
+          <div class="photo-caption"><span class="dot"></span> BBA Transformation Team <span class="dot"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 · CASE STUDY 1 · VIKKI M -->
+  <section class="slide">
+    <div class="container">
+      <div class="eyebrow">Case Study · 01 · 17 KGS Loss</div>
+      <div class="case">
+        <div class="case-photo">
+          <img src="img/vikki-m.webp" alt="Vikki M transformation photo" />
+        </div>
+        <div>
+          <h2>Vikki M · 57 years</h2>
+          <span class="result-pill">17 KGS LOSS · WAIST 27 CM LOSS</span>
+          <p class="mt-32">There's never been a more sceptical starter than Vikki. She'd lost all hope and self belief, and this was her last attempt before giving up after so many failures.</p>
+          <p>Fast forward six months, she's perhaps the most transformed woman in our history and 15 kg down.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 · CASE STUDY 2 · LINDA J -->
+  <section class="slide">
+    <div class="container">
+      <div class="eyebrow">Case Study · 02</div>
+      <div class="case">
+        <div class="case-photo">
+          <img src="img/linda-j.webp" alt="Linda J transformation photo" />
+        </div>
+        <div>
+          <h2>Linda J · 53 years</h2>
+          <span class="result-pill">15 KGS LOSS · WAIST 11 CM LOSS</span>
+          <p class="mt-32">After having 2 kids, 21 months apart, Linda felt like it was time to prioritise herself again. When she started, she was an emotional eating, non-sleeping, hot mess.</p>
+          <p>Well, now she's back in a bikini, the results are amazing, right?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 · FRAMEWORK INTRO -->
+  <section class="slide breaker">
+    <div class="narrow center">
+      <div class="eyebrow center">The framework</div>
+      <h1>The 3 pillars we use with <span class="serif">every woman in this stage.</span></h1>
+    </div>
+  </section>
+
+  <!-- 16 · PILLAR GRID -->
+  <section class="slide">
+    <div class="container">
+      <div class="eyebrow">Three pillars. One outcome.</div>
+      <h2>Hormone-aware nutrition. Strength-led training. Recovery you actually do.</h2>
+      <div class="pillar-grid">
+        <div class="pillar-card">
+          <div class="num">I</div>
+          <h3>Nutrition for your hormones</h3>
+          <p>Protein, fibre, and carb timing built around your cycle stage and cortisol load. Not a meal plan. A pattern.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="num">II</div>
+          <h3>Strength-led training</h3>
+          <p>3-4 short, heavy sessions per week. Builds the muscle that protects your metabolism through the next decade.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="num">III</div>
+          <h3>Recovery + accountability</h3>
+          <p>Sleep, stress, and a coach in your corner who actually checks in. The pillar most women skip and most women need.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 · WHAT FIXES IN 90 DAYS -->
+  <section class="slide">
+    <div class="narrow">
+      <div class="eyebrow">What changes in 90 days</div>
+      <h2>What women in our coaching tell us by month 3.</h2>
+      <ul class="promise-list">
+        <li><span class="pin">✓</span><span class="text">The 3pm energy crash is gone. Mornings come back.</span></li>
+        <li><span class="pin">✓</span><span class="text">Clothes fit differently before the scale catches up. Then the scale catches up.</span></li>
+        <li><span class="pin">✓</span><span class="text">Sleep settles. Cravings drop. You stop white-knuckling food decisions.</span></li>
+        <li><span class="pin">✓</span><span class="text">For the first time in years, the plan isn't the hardest part of your day.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 18 · WHO THIS IS FOR / NOT FOR -->
+  <section class="slide">
+    <div class="container">
+      <div class="eyebrow">Honesty before the next step</div>
+      <h2>Who this is for, and who it isn't.</h2>
+      <div class="who-cols">
+        <div class="who-card no">
+          <h3>Not your room if…</h3>
+          <ul class="who-list">
+            <li><span class="mark no-m">×</span>You want a 21-day cleanse and a quick fix.</li>
+            <li><span class="mark no-m">×</span>You'd rather be told you have no work to do.</li>
+            <li><span class="mark no-m">×</span>You're not ready to invest in coaching, even if it's the right move.</li>
+          </ul>
+        </div>
+        <div class="who-card yes">
+          <h3>Your room if…</h3>
+          <ul class="who-list">
+            <li><span class="mark yes-m">✓</span>You're a woman 35-60 who's tried everything and is tired of guessing.</li>
+            <li><span class="mark yes-m">✓</span>You want a plan built for the body you have now, not the one you had at 25.</li>
+            <li><span class="mark yes-m">✓</span>You're ready to be coached, not just sold a meal plan.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19 · DECISION -->
+  <section class="slide breaker">
+    <div class="narrow center">
+      <div class="eyebrow center">Your decision</div>
+      <h1>You can keep guessing.<br/><span class="serif">Or you can get a plan.</span></h1>
+      <p class="lead mt-32" style="max-width:680px;margin-left:auto;margin-right:auto;">This isn't for everyone, but if you're ready for real change, this is the next step.</p>
+    </div>
+  </section>
+
+  <!-- 20 · CTA -->
+  <section class="slide">
+    <div class="container center">
+      <div class="eyebrow center">Your next step</div>
+      <h1>Book your <span class="serif">Game Plan Call.</span></h1>
+      <p class="lead mt-32" style="max-width:720px;margin-left:auto;margin-right:auto;">A 30-minute call with a BBA coach. We map your hormones, your history, and the exact next step. No pitch deck. No pressure.</p>
+      <div class="mt-48">
+        <a href="#" class="cta-btn" id="cta-btn"><span class="dot"></span>Book My Game Plan Call</a>
+      </div>
+      <p class="mt-48" style="font-family:var(--mono);font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);">Better Body Academy · You only get one body. Let's actually use it.</p>
+    </div>
+  </section>
+
+</main>
+
+<nav class="controls" aria-label="Slide controls">
+  <button class="ctrl-btn" id="prev" aria-label="Previous slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
+  </button>
+  <div class="progress-wrap" aria-hidden="true"><div class="progress" id="prog"></div></div>
+  <span class="counter"><b id="cur">01</b> / <span id="tot">20</span></span>
+  <div class="progress-wrap" aria-hidden="true"><div class="progress" id="prog2"></div></div>
+  <button class="ctrl-btn" id="next" aria-label="Next slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+</nav>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var idx = 0;
+  var prog = document.getElementById('prog');
+  var prog2 = document.getElementById('prog2');
+  var cur = document.getElementById('cur');
+  var tot = document.getElementById('tot');
+  tot.textContent = String(slides.length).padStart(2, '0');
+
+  function go(n){
+    n = Math.max(0, Math.min(slides.length - 1, n));
+    if (n === idx) return;
+    slides[idx].classList.remove('active');
+    slides[n].classList.add('active');
+    idx = n;
+    update();
+  }
+  function next(){ go(idx + 1); }
+  function prev(){ go(idx - 1); }
+  var live = document.getElementById('live-region');
+  function update(){
+    cur.textContent = String(idx + 1).padStart(2, '0');
+    var pct = (idx / (slides.length - 1)) * 100;
+    prog.style.width = pct + '%';
+    prog2.style.width = pct + '%';
+    slides[idx].scrollTop = 0;
+    if (live) live.textContent = 'Slide ' + (idx + 1) + ' of ' + slides.length;
+  }
+  document.getElementById('next').addEventListener('click', next);
+  document.getElementById('prev').addEventListener('click', prev);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft'  || e.key === 'PageUp')                   { e.preventDefault(); prev(); }
+    if (e.key === 'Home') { go(0); }
+    if (e.key === 'End')  { go(slides.length - 1); }
+  });
+  var sx = 0;
+  document.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive: true});
+  document.addEventListener('touchend', function(e){
+    var dx = (e.changedTouches[0].clientX) - sx;
+    if (Math.abs(dx) > 60) (dx < 0 ? next : prev)();
+  }, {passive: true});
+
+  var m = (location.hash || '').match(/slide=(\d+)/);
+  if (m) {
+    var target = Math.max(0, Math.min(slides.length - 1, parseInt(m[1], 10) - 1));
+    slides.forEach(function(s){ s.classList.remove('active'); });
+    slides[target].classList.add('active');
+    idx = target;
+  }
+  update();
+
+  var ctaBtn = document.getElementById('cta-btn');
+  ctaBtn && ctaBtn.addEventListener('click', function(e){ e.preventDefault(); });
+})();
+</script>
+</body>
+</html>
