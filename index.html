@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <title>Better Body Academy · The Hormone Fix Webinar</title>
-<meta name="theme-color" content="#F58FA8" />
+<meta name="theme-color" content="#F323A1" />
 <link rel="icon" type="image/png" href="img/bba-badge.png" />
 <link rel="apple-touch-icon" href="img/bba-badge.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,9 +18,9 @@
     --text: #ffffff;
     --text-2: rgba(255,255,255,0.7);
     --muted: rgba(255,255,255,0.45);
-    --pink: #F58FA8;
-    --pink-glow: #FFB6CE;
-    --pink-soft: rgba(245,143,168,0.14);
+    --pink: #F323A1;
+    --pink-glow: #FF5FC4;
+    --pink-soft: rgba(243,35,161,0.14);
     --border: rgba(255,255,255,0.08);
     --border-strong: rgba(255,255,255,0.2);
     --ok: #22C55E;
@@ -47,11 +47,11 @@
     text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase;
     transform: translateY(-200%); transition: transform 0.2s ease;
   }
-  .skip-link:focus-visible { transform: translateY(0); outline: none; box-shadow: 0 0 0 3px rgba(245,143,168,0.45); }
+  .skip-link:focus-visible { transform: translateY(0); outline: none; box-shadow: 0 0 0 3px rgba(243,35,161,0.45); }
 
   :focus-visible { outline: none; }
   .ctrl-btn:focus-visible, .cta-btn:focus-visible {
-    box-shadow: 0 0 0 3px var(--pink), 0 0 0 6px rgba(245,143,168,0.28);
+    box-shadow: 0 0 0 3px var(--pink), 0 0 0 6px rgba(243,35,161,0.28);
   }
 
   /* Deck + slides */
@@ -77,7 +77,7 @@
   .logo { display: inline-flex; align-items: center; color: var(--text); }
   .logo img {
     height: 72px; width: auto; display: block;
-    filter: drop-shadow(0 4px 18px rgba(245,143,168,0.22));
+    filter: drop-shadow(0 4px 18px rgba(243,35,161,0.22));
   }
   .session-tag {
     font-family: var(--mono); font-size: 13px; color: var(--muted);
@@ -147,9 +147,9 @@
   .cover::before {
     content: ""; position: absolute; inset: 0;
     background:
-      radial-gradient(60% 80% at 78% 35%, rgba(245,143,168,0.25), transparent 65%),
-      radial-gradient(45% 60% at 12% 78%, rgba(245,143,168,0.12), transparent 70%),
-      radial-gradient(80% 60% at 50% 110%, rgba(255,182,206,0.08), transparent 70%);
+      radial-gradient(60% 80% at 78% 35%, rgba(243,35,161,0.25), transparent 65%),
+      radial-gradient(45% 60% at 12% 78%, rgba(243,35,161,0.12), transparent 70%),
+      radial-gradient(80% 60% at 50% 110%, rgba(255,95,196,0.08), transparent 70%);
     z-index: 0; pointer-events: none;
   }
   .cover > * { position: relative; z-index: 1; }
@@ -159,12 +159,12 @@
   .cover-badge {
     position: relative;
     aspect-ratio: 1; max-width: 360px; margin: 0 auto;
-    filter: drop-shadow(0 30px 80px rgba(245,143,168,0.45));
+    filter: drop-shadow(0 30px 80px rgba(243,35,161,0.45));
   }
   .cover-badge img { width: 100%; height: auto; display: block; }
   .cover-badge::before {
     content: ""; position: absolute; inset: -10%; z-index: -1; border-radius: 50%;
-    background: radial-gradient(circle, rgba(245,143,168,0.25), transparent 65%);
+    background: radial-gradient(circle, rgba(243,35,161,0.25), transparent 65%);
   }
   @media (max-width: 900px) {
     .cover-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -202,7 +202,7 @@
   .promise-list li {
     display: flex; gap: 16px; align-items: flex-start;
     padding: 18px 22px; border: 1px solid var(--border); border-radius: 14px;
-    background: rgba(245,143,168,0.04);
+    background: rgba(243,35,161,0.04);
   }
   .promise-list .pin {
     flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
@@ -231,7 +231,7 @@
     margin-top: 32px;
     border-radius: 24px; overflow: hidden;
     border: 1px solid var(--border-strong);
-    box-shadow: 0 30px 80px -20px rgba(245,143,168,0.3);
+    box-shadow: 0 30px 80px -20px rgba(243,35,161,0.3);
     max-width: 760px;
   }
   .photo-block img { display: block; width: 100%; height: auto; }
@@ -261,7 +261,7 @@
   }
   .case .ph {
     aspect-ratio: 4/5; border-radius: 16px;
-    background: linear-gradient(135deg, rgba(245,143,168,0.15), rgba(255,182,206,0.05));
+    background: linear-gradient(135deg, rgba(243,35,161,0.15), rgba(255,95,196,0.05));
     border: 1px dashed var(--border-strong);
     display: grid; place-items: center;
     font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em;
@@ -270,7 +270,7 @@
   .case-photo {
     aspect-ratio: 4/5; border-radius: 16px; overflow: hidden;
     border: 1px solid var(--border-strong);
-    box-shadow: 0 20px 60px -15px rgba(245,143,168,0.35);
+    box-shadow: 0 20px 60px -15px rgba(243,35,161,0.35);
   }
   .case-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .case h2 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); }
@@ -286,7 +286,7 @@
   .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
   .pillar-card {
     border: 1px solid var(--border); border-radius: 18px; padding: 28px 24px;
-    background: rgba(245,143,168,0.04);
+    background: rgba(243,35,161,0.04);
   }
   .pillar-card .num {
     font-family: var(--serif); font-style: italic; font-size: 3.4rem;
@@ -326,10 +326,10 @@
     background: linear-gradient(135deg, var(--pink), var(--pink-glow));
     color: #000; font-weight: 800; font-size: 1.1rem; letter-spacing: 0.02em;
     text-decoration: none;
-    box-shadow: 0 20px 60px -15px rgba(245,143,168,0.6);
+    box-shadow: 0 20px 60px -15px rgba(243,35,161,0.6);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 24px 70px -15px rgba(245,143,168,0.8); }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 24px 70px -15px rgba(243,35,161,0.8); }
   .cta-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: #000; }
 
   /* Small mobile */
