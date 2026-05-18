@@ -37,6 +37,14 @@
     overflow: hidden; height: 100%;
     -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
   }
+  @media (max-width: 600px) {
+    html, body { overflow: auto; height: auto; }
+    .deck { position: relative; overflow: visible; }
+    .slide { position: relative; display: none; padding: 80px 18px 90px; overflow: visible; }
+    .slide.active { display: flex; }
+    .brandbar { position: fixed; }
+    .controls { position: fixed; }
+  }
   ::selection { background: var(--pink); color: #000; }
 
   .skip-link {
@@ -336,14 +344,52 @@
   .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 24px 70px -15px rgba(243,35,161,0.8); }
   .cta-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: #000; }
 
+  /* Tablet */
+  @media (max-width: 900px) {
+    .brandbar { padding: 14px 20px; }
+    .logo img { height: 52px; }
+    .slide { padding: 100px clamp(20px, 5vw, 60px) 90px; }
+    h1 { font-size: clamp(2rem, 5.5vw, 3.4rem); }
+    h2 { font-size: clamp(1.6rem, 3.8vw, 2.4rem); }
+    .cta-btn { padding: 16px 32px; font-size: 1rem; }
+    .cover { padding-top: clamp(120px, 18vh, 200px); }
+  }
+
   /* Small mobile */
   @media (max-width: 600px) {
-    .slide { padding: 80px 20px 100px; }
-    .cover h1 { font-size: clamp(1.9rem, 8vw, 2.6rem); }
-    .controls { padding: 14px 16px; }
+    .slide { padding: 80px 18px 90px; overflow-y: auto; }
+    .cover h1 { font-size: clamp(1.8rem, 7.5vw, 2.4rem); }
+    .cover-grid { gap: 24px; }
+    .cover .meta { gap: 14px; font-size: 11px; letter-spacing: 0.12em; flex-direction: column; }
+    .brandbar { padding: 12px 16px; }
+    .logo img { height: 44px; }
     .session-tag { display: none; }
+    .controls { padding: 12px 14px; }
     .progress-wrap { display: none; }
+    .counter { font-size: 12px; min-width: 56px; }
+    .ctrl-btn { width: 38px; height: 38px; border-radius: 10px; }
+    .ctrl-btn svg { width: 16px; height: 16px; }
     .pain-grid, .myth-row, .pillar-grid, .who-cols { grid-template-columns: 1fr; }
+    h2 { font-size: clamp(1.45rem, 6.5vw, 2rem); }
+    h3 { font-size: clamp(1.1rem, 5vw, 1.5rem); }
+    p { font-size: 0.97rem; }
+    .lead { font-size: 1.05rem; }
+    .eyebrow { font-size: 11px; letter-spacing: 0.16em; margin-bottom: 18px; }
+    .cta-btn { padding: 16px 24px; font-size: 0.95rem; width: 100%; justify-content: center; gap: 10px; }
+    .promise-list li { padding: 14px 16px; gap: 12px; }
+    .who-card { padding: 20px; }
+    .pillar-card { padding: 22px 18px; }
+    .pain-card { padding: 18px 20px; }
+    .myth-card { padding: 20px 18px; }
+    .case { padding: 18px; gap: 20px; }
+  }
+
+  @media (max-width: 400px) {
+    .slide { padding: 74px 14px 84px; }
+    .logo img { height: 38px; }
+    .cover h1 { font-size: clamp(1.6rem, 8.5vw, 2rem); }
+    .ctrl-btn { width: 34px; height: 34px; }
+    .cta-btn { font-size: 0.9rem; padding: 14px 20px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
