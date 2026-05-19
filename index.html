@@ -40,7 +40,7 @@
   @media (max-width: 600px) {
     html, body { overflow: auto; height: auto; }
     .deck { position: relative; overflow: visible; }
-    .slide { position: relative; display: none; padding: 80px 18px 90px; overflow: visible; }
+    .slide { position: relative; display: none; padding: 80px 18px 90px; overflow: visible; min-height: 100vh; }
     .slide.active { display: flex; }
     .brandbar { position: fixed; }
     .controls { position: fixed; }
@@ -153,15 +153,15 @@
   /* Cover slide */
   .cover {
     position: relative; text-align: left; background: var(--bg);
-    justify-content: flex-start;
-    padding-top: clamp(140px, 22vh, 280px);
+    justify-content: center;
+    min-height: 100vh;
   }
   .cover::before {
-    content: ""; position: absolute; inset: 0;
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 200%; min-height: 100vh;
     background:
-      radial-gradient(60% 80% at 78% 35%, rgba(243,35,161,0.25), transparent 65%),
-      radial-gradient(45% 60% at 12% 78%, rgba(243,35,161,0.12), transparent 70%),
-      radial-gradient(80% 60% at 50% 110%, rgba(255,95,196,0.08), transparent 70%);
+      radial-gradient(60% 40% at 78% 25%, rgba(243,35,161,0.25), transparent 65%),
+      radial-gradient(45% 40% at 12% 60%, rgba(243,35,161,0.12), transparent 70%),
+      radial-gradient(100% 30% at 50% 95%, rgba(243,35,161,0.15), transparent 70%);
     z-index: 0; pointer-events: none;
   }
   .cover > * { position: relative; z-index: 1; }
@@ -279,11 +279,12 @@
     text-transform: uppercase; color: var(--muted); text-align: center;
   }
   .case-photo {
-    aspect-ratio: 4/5; border-radius: 16px; overflow: hidden;
+    border-radius: 16px; overflow: hidden;
     border: 1px solid var(--border-strong);
     box-shadow: 0 20px 60px -15px rgba(243,35,161,0.35);
+    background: transparent; line-height: 0;
   }
-  .case-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .case-photo img { width: 100%; display: block; object-fit: cover; object-position: top; aspect-ratio: 4/5; max-height: 500px; }
   .case h2 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); }
   .case .result-pill {
     display: inline-flex; align-items: center; gap: 10px; margin-top: 12px;
@@ -356,7 +357,7 @@
 
   /* Small mobile */
   @media (max-width: 600px) {
-    .slide { padding: 80px 18px 90px; overflow-y: auto; }
+    .slide { padding: 80px 18px 120px; overflow-y: auto; }
     .cover h1 { font-size: clamp(1.8rem, 7.5vw, 2.4rem); }
     .cover-grid { gap: 24px; }
     .cover .meta { gap: 14px; font-size: 11px; letter-spacing: 0.12em; flex-direction: column; }
@@ -384,7 +385,7 @@
   }
 
   @media (max-width: 400px) {
-    .slide { padding: 74px 14px 84px; }
+    .slide { padding: 74px 14px 120px; }
     .logo img { height: 38px; }
     .cover h1 { font-size: clamp(1.6rem, 8.5vw, 2rem); }
     .ctrl-btn { width: 34px; height: 34px; }
@@ -587,7 +588,7 @@
       <div class="eyebrow">Case Study · 01 · 17 KGS Loss</div>
       <div class="case">
         <div class="case-photo">
-          <img src="img/vikki-m.webp" alt="Vikki M transformation photo" />
+          <img src="img/vikki-m.jpg" alt="Vikki M transformation photo" />
         </div>
         <div>
           <h2>Vikki M · 57 years</h2>
@@ -605,7 +606,7 @@
       <div class="eyebrow">Case Study · 02</div>
       <div class="case">
         <div class="case-photo">
-          <img src="img/linda-j.webp" alt="Linda J transformation photo" />
+          <img src="img/linda-j.jpg" alt="Linda J transformation photo" />
         </div>
         <div>
           <h2>Linda J · 53 years</h2>
